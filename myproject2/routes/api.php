@@ -44,12 +44,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return 204;
 // });
 
-
-Route::get('projects', 'ProjectController@index');
-Route::get('projects/{project}', 'ProjectController@show');
-Route::post('projects', 'ProjectController@store');
-Route::put('projects/{project}', 'ProjectController@update');
-Route::delete('projects/{project}', 'ProjectController@delete');
+Route::group(['middleware' => 'auth:api'], function() {
+    Route::get('projects', 'ProjectController@index');
+    Route::get('projects/{project}', 'ProjectController@show');
+    Route::post('projects', 'ProjectController@store');
+    Route::put('projects/{project}', 'ProjectController@update');
+    Route::delete('projects/{project}', 'ProjectController@delete');
+});
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
