@@ -1,10 +1,10 @@
 <?php
 
 namespace Database\Seeders;
-
+use DB;
 use Illuminate\Database\Seeder;
 
-class ProjectsTableSeeder extends Seeder
+class TasksTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,13 +13,14 @@ class ProjectsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        //\App\Models\Project::truncate();
+        $projectIDs = DB::table('projects')->pluck('id');
         $faker = \Faker\Factory::create();
         for ($i = 0; $i < 15; $i++) {
-            \App\Models\Project::create([
-                'name' => $faker->sentence,
+            \App\Models\Task::create([
+                'title' => $faker->sentence,
                 'description' => $faker->paragraph,
+                'project_id' => $faker->randomElement($projectIDs),
+                'status' => 'created',
             ]);
         }
     }

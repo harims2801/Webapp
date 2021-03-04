@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,24 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::truncate();
-        $faker = \Faker\Factory::create();
-        $password = Hash::make('test');
+        $this->call([
+            UsersTableSeeder::class,
+            ProjectsTableSeeder::class,
+            TasksTableSeeder::class,
+            ProjectMembersTableSeeder::class]
+    );
+        //$this->call(ProjectsTableSeeder::class);
 
-         \App\Models\User::factory(10)->create();
-
-         \App\Models\User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@test.com',
-            'password' => $password,
-        ]);
-
-        for ($i = 0; $i < 10; $i++) {
-            \App\Models\User::create([
-                'name' => $faker->name,
-                'email' => $faker->email,
-                'password' => $password,
-            ]);
-        }
     }
 }
