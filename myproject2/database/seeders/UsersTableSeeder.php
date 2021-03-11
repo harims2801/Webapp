@@ -16,20 +16,21 @@ class UsersTableSeeder extends Seeder
         //\App\Models\User::truncate();
         $faker = \Faker\Factory::create();
         $password = Hash::make('test');
+        $role = ['manager','admin','user'];
+         //\App\Models\User::factory(10)->create();
 
-         \App\Models\User::factory(10)->create();
-
-        //  \App\Models\User::create([
-        //     'name' => 'Administrator',
-        //     'email' => 'admin@test.com',
-        //     'password' => $password,
-        // ]);
+          \App\Models\User::create([
+             'name' => 'Administrator',
+             'email' => 'admin@test.com',
+             'password' => $password,
+         ]);
 
         for ($i = 0; $i < 10; $i++) {
             \App\Models\User::create([
                 'name' => $faker->name,
                 'email' => $faker->email,
                 'password' => $password,
+                'user_role' => $faker->randomElement($role)
             ]);
         }
     }

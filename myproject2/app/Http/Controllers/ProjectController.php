@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
-
+use DB;
 class ProjectController extends Controller
 {
 
@@ -30,5 +30,30 @@ class ProjectController extends Controller
         $project->delete();
 
         return response()->json(null, 204);
+    }
+    public function statistics_user($user){
+        //return
+        //DB::query("SELECT status,Count(*) count,AssignedTo from (SELECT status,AssignedTo from tasks where AssignedTo = $user) s GROUP by AssignedTo,status");
+        $res = DB::table('tasks')
+        ->where('tasks.AssignedTo', '=', $user)
+        ->join('users', 'users.id', '=', 'tasks.AssignedTo')
+        ->select('users.name','status',DB::raw('count("id") as count' ))
+        ->groupBy('users.name',"status")
+        ->get();
+        return response()->json($res, 200);
+    }
+    public function statistics(){
+    // $users = DB::query("SELECT status,Count(*) count,AssignedTo from (SELECT status,AssignedTo from tasks) s GROUP by AssignedTo,status");
+    //    $users = DB::table('tasks')
+    //                 //->select('status', 'Count(id)', 'AssignedTo')
+    //                 ->select(DB::raw(' * '))
+    //                 ->get();
+    $res = DB::table('tasks')
+    ->join('users', 'users.id', '=', 'tasks.AssignedTo')
+    ->select('users.name','status',DB::raw('count("id") as count' ))
+    ->groupBy('users.name',"status")
+    ->get();
+
+        return response()->json($res, 200);
     }
 }

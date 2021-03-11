@@ -9,7 +9,7 @@ use App\Models\Project;
 class ProjectMember extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id','project_id','project_role'];
+    protected $fillable = ['user_id','project_id'];
 
     public function project()
     {

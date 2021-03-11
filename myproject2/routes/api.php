@@ -65,21 +65,22 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('projectmembers/{project}/user/{user}', 'ProjectMemberController@show_user_projects');
     Route::get('memberofprojects/{project}', 'ProjectMemberController@show_project_members');
     Route::post('projectmembers', 'ProjectMemberController@store');
-    Route::put('projectmembers/projects/{project}/user/{user}', 'ProjectMemberController@update');
+    //Route::put('projectmembers/projects/{project}/user/{user}', 'ProjectMemberController@update_member');
+    Route::put('projectmembers/{member}', 'ProjectMemberController@updatewithid');
     Route::delete('projectmembers/{project}/user/{user}', 'ProjectMemberController@delete');
     //Task Management
     Route::post('tasks', 'TaskController@store');
     Route::put('tasks/{task}', 'TaskController@update');
     Route::delete('tasks/{task}', 'TaskController@delete');
-    //Route::get('tasks', 'TaskController@index');
+    Route::get('tasks', 'TaskController@index');
     Route::get('tasks/{task}', 'TaskController@show');
-    Route::get('project_tasks/{project}', 'TaskController@project_tasks');
+    //statistics
+    Route::get('projects_statistics', 'ProjectController@statistics');
+    Route::get('user_statistics/{user}', 'ProjectController@statistics_user');
 
 });
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
-
-
 
 
 //Route::post('/login', [LoginController::class, 'login']);

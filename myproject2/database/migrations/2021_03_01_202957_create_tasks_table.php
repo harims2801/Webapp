@@ -17,7 +17,7 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->foreignId('AssignedTo')->constrained('users');
+            $table->foreignId('AssignedTo')->nullable()->constrained('users');
             $table->foreignId('project_id')->constrained('projects');
             $table->string('status');
             $table->timestamps();
