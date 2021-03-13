@@ -42,6 +42,20 @@ class ProjectController extends Controller
         ->get();
         return response()->json($res, 200);
     }
+    public function statistics_user1($user){
+        //return
+        //DB::query("SELECT status,Count(*) count,AssignedTo from (SELECT status,AssignedTo from tasks where AssignedTo = $user) s GROUP by AssignedTo,status");
+        $res = DB::table('tasks')
+        ->Join('tasks',function($join) {
+                            $join->on('tasks.user_id','=','tasks.user_id')
+                                ->orWhere('tasks.status','created');
+                        })
+        ->where('tasks.user_id',1)
+        ->select(DB::raw('count(tasks.task_id)'))
+        ->get();
+        return response()->json($res, 200);
+    }
+
     public function statistics(){
     // $users = DB::query("SELECT status,Count(*) count,AssignedTo from (SELECT status,AssignedTo from tasks) s GROUP by AssignedTo,status");
     //    $users = DB::table('tasks')

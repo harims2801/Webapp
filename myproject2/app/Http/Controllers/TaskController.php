@@ -35,5 +35,11 @@ class TaskController extends Controller
     public function show(Task $task) {
         return $task;
     }
+    public function show_user_tasks($user_id){
+       $res =  DB::table('tasks')
+        ->where('AssignedTo',$user_id)
+        ->get();
+        return response()->json($res, 200);
+    }
 
 }

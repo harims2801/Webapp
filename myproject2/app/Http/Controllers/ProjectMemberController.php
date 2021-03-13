@@ -58,9 +58,9 @@ class ProjectMemberController extends Controller
         //$member->update($request->all());
         return response()->json($member, 200);
     }
-    public function delete($project, $user){
-        ProjectMember::where('project_id',$project)-> where('user_id',$user) ->delete();
-        //$member->delete();
+    public function delete(ProjectMember $member){
+        //ProjectMember::where('project_id',$project)-> where('user_id',$user) ->delete();
+        $member->delete();
         return response()->json(null, 204);
     }
 }

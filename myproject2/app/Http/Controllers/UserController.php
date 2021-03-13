@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -25,4 +25,16 @@ class UserController extends Controller
         $user->delete();
         return response()->json(null, 204);
     }
+
+    public function store(Request $request) {
+
+        return User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'user_role' => $request['user_role']
+        ]);
+        return response()->json($task, 201);
+    }
+
 }
