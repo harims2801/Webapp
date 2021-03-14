@@ -20,30 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-// Route::get('projects', function (){
-//     return Project::all();
-// });
-
-// Route::get('project\{id}',function($id){
-//     return Project::find($id);
-
-// });
-
-// Route::post('projects', function(Request $request){
-//     return Project::create($request->all());
-// });
-
-// Route::put('Project\{id}', function(Request $request, $id){
-//     $project = Project::findOrFail($id);
-//     $project->update($request->all());
-//     return $project;
-// });
-
-// Route::delete('Project\{id}', function($id){
-//     Project::find($id)->delete();
-//     return 204;
-// });
-
 Route::group(['middleware' => 'auth:api'], function() {
     //logout
     Route::post('logout', 'Auth\LoginController@logout');
@@ -83,11 +59,10 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     //statistics
     Route::get('projects_statistics', 'ProjectController@statistics');
-    Route::get('user_statistics/{user}', 'ProjectController@statistics_user');
-    Route::get('user_statistics1/{user}', 'ProjectController@statistics_user1');
+    Route::get('user_statistics_old/{user}', 'ProjectController@statistics_user');
+    Route::get('user_statistics/{user}', 'ProjectController@statistics_user_new');
 });
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
 
 
-//Route::post('/login', [LoginController::class, 'login']);
