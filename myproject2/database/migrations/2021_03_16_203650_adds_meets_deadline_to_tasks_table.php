@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatsTable extends Migration
+class AddsMeetsDeadlineToTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateStatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stats', function (Blueprint $table) {
-            $table->string('user');
-            $table->string('assigned');
-            //$table->string('created');
-            $table->string('pending');
-            $table->string('resolved');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->string('meets_deadline')->nullable();
         });
     }
 
@@ -29,6 +25,8 @@ class CreateStatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stats');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->dropColumn('meets_deadline');
+        });
     }
 }

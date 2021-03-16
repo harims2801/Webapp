@@ -19,8 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::group(['middleware' => 'auth:api'], function() {
+    Route::group(['middleware' => 'auth:api'], function() {
     //logout
     Route::post('logout', 'Auth\LoginController@logout');
     //Project Management
@@ -55,7 +54,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('tasks/{task}', 'TaskController@show');
     Route::get('user_tasks/{user_id}', 'TaskController@show_user_tasks');
     //Route::get('project_tasks/{project_id}', 'TaskController@show_project_tasks');
-
 
     //statistics
     Route::get('projects_statistics', 'ProjectController@statistics');

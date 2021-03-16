@@ -25,6 +25,19 @@ class UsersTableSeeder extends Seeder
              'password' => $password,
          ]);
 
+         \App\Models\User::create([
+            'name' => 'Hari',
+            'email' => 'hari@mcit.com',
+            'password' => $password,
+            'user_role' => 'admin'
+        ]);
+        \App\Models\User::create([
+            'name' => 'satish',
+            'email' => 'satish@mcit.com',
+            'password' => $password,
+            'user_role' => 'admin'
+        ]);
+
         for ($i = 0; $i < 10; $i++) {
             \App\Models\User::create([
                 'name' => $faker->name,

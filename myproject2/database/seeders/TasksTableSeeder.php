@@ -14,19 +14,45 @@ class TasksTableSeeder extends Seeder
 
     public function run()
     {
-        $states = array('Created','Assigned','Pending','Resolved');
+
+        $task_Descriptions = array(
+            "Avaya Phone system",
+            "Manage Engine Deployment",
+            "CI/CD",
+            "Fishbowl",
+            "active Directory Automation",
+            "cyber security",
+            "HR Automation",
+            "IT ServiceDesk",
+            "Facilities Management",
+            "AD Audit",
+            "ServiceNow Rollout",
+            "FileShare Cleanup"
+
+        );
+
+        $states = array('assigned','pending');
         $projectIDs = DB::table('projects')->pluck('id');
         $userIDs = DB::table('users')->pluck('id');
         $faker = \Faker\Factory::create();
+        $project_id = 1;
+        $task_id = 1;
         for ($i = 0; $i < 15; $i++) {
+
             \App\Models\Task::create([
-                'title' => $faker->sentence,
+                'title' => "MCIT Task ".$task_id." in project ".$project_id,
                 'description' => $faker->paragraph,
-                'project_id' => $faker->randomElement($projectIDs),
+                'project_id' => $project_id,
                 'AssignedTo' => $faker->randomElement($userIDs),
                 'status' => $faker->randomElement($states),
                 'dead_line' => Carbon::createFromDate(2021,01,$i+1),
             ]);
+            if ($i%2 == 0) {
+                $project_id = $project_id +1;
+                $task_id = 1;
+            }else{
+                $task_id = 2;
+            }
         }
     }
 }
