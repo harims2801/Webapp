@@ -228,24 +228,19 @@ class ProjectController extends Controller
             //->get();
             ->pluck('resolved');
 
-            $resolved_on_time = DB::table('tasks')
+            $resolved_out_time = DB::table("tasks")
             ->join('users', 'users.id', '=', 'tasks.AssignedTo')
-            ->select('users.name',DB::raw('(select count(cr.id) created from tasks o join tasks cr on o.id=cr.id and cr.status = "created" where o.AssignedTo="'.$user.'") created, (select count(pd.id) pending from tasks o join tasks pd on o.id=pd.id and pd.status = "pending" where o.AssignedTo="'.$user.'") pending, (select count(rs.id) pending from tasks o join tasks rs on o.id=rs.id and rs.status = "resolved" where o.AssignedTo="'.$user.'") resolved, (select count(ad.id) pending from tasks o join tasks ad on o.id=ad.id and ad.status = "assigned" where o.AssignedTo="'.$user.'") assigned'))
-            ->where('tasks.AssignedTo',$user)
-            ->where('tasks.meets_deadline',"1")
-            ->groupBy('users.name')
-            //->get();
-            ->pluck('resolved');
+            ->select(DB::raw('select count(tasks.id)'))
+            ->where('tasks.AssignedTo','=',$user)
+            ->where('tasks.meets_deadline',"=","0")
+            ->count();
 
-
-            $resolved_out_time = DB::table('tasks')
+            $resolved_on_time = DB::table("tasks")
             ->join('users', 'users.id', '=', 'tasks.AssignedTo')
-            ->select('users.name',DB::raw('(select count(cr.id) created from tasks o join tasks cr on o.id=cr.id and cr.status = "created" where o.AssignedTo="'.$user.'") created, (select count(pd.id) pending from tasks o join tasks pd on o.id=pd.id and pd.status = "pending" where o.AssignedTo="'.$user.'") pending, (select count(rs.id) pending from tasks o join tasks rs on o.id=rs.id and rs.status = "resolved" where o.AssignedTo="'.$user.'") resolved, (select count(ad.id) pending from tasks o join tasks ad on o.id=ad.id and ad.status = "assigned" where o.AssignedTo="'.$user.'") assigned'))
-            ->where('tasks.AssignedTo',$user)
-            ->where('tasks.meets_deadline',"0")
-            ->groupBy('users.name')
-            //->get();
-            ->pluck('resolved');
+            ->select(DB::raw('select count(tasks.id)'))
+            ->where('tasks.AssignedTo','=',$user)
+            ->where('tasks.meets_deadline',"=","1")
+            ->count();
 
             // get string form object
             $arr = (string)$user_id;
@@ -278,8 +273,10 @@ class ProjectController extends Controller
             $arr = str_replace("]","",$arr);
             $resolved_out_time = $arr;
 
-            if ($user == "" && $assigned == "" && $created == "" && $pending == "" && $resolved == "" && $resolved_out_time == "" && $resolved_on_time == ""){
-                    // do not push
+            if ($assigned == "" && $pending == "" && $resolved == "" && $resolved_out_time == "" && $resolved_on_time == ""){
+                // do not push
+            }elseif($assigned == 0 && $pending == 0 && $resolved == 0 && $resolved_out_time == 0 && $resolved_on_time == 0){
+                // do not update
             }else{
                 if ($assigned == ""){$assigned = 0;}
                 //if ($created == ""){$created = 0;}

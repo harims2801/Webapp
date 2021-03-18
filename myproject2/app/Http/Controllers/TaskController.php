@@ -47,6 +47,10 @@ class TaskController extends Controller
                     'meets_deadline' => '1'
                 ]);
             }
+        }else{
+            $request->merge([
+                'meets_deadline' => 'null'
+            ]);
         };
         $request->merge([
             'id' => $task
