@@ -239,7 +239,7 @@ class ProjectController extends Controller
             ->join('users', 'users.id', '=', 'tasks.AssignedTo')
             ->select(DB::raw('select count(tasks.id)'))
             ->where('tasks.AssignedTo','=',$user)
-            ->where('tasks.meets_deadline',"=","0")
+            ->where('tasks.meets_deadline',"=","1")
             ->count();
 
             // get string form object
@@ -273,8 +273,10 @@ class ProjectController extends Controller
             $arr = str_replace("]","",$arr);
             $resolved_out_time = $arr;
 
-            if ($user == "" && $assigned == "" && $created == "" && $pending == "" && $resolved == "" && $resolved_out_time == "" && $resolved_on_time == ""){
-                    // do not push
+            if ($assigned == "" && $pending == "" && $resolved == "" && $resolved_out_time == "" && $resolved_on_time == ""){
+                // do not push
+            }elseif($assigned == 0 && $pending == 0 && $resolved == 0 && $resolved_out_time == 0 && $resolved_on_time == 0){
+                // do not update
             }else{
                 if ($assigned == ""){$assigned = 0;}
                 //if ($created == ""){$created = 0;}
