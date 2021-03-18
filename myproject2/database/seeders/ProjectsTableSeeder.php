@@ -34,7 +34,7 @@ class ProjectsTableSeeder extends Seeder
 
 
         $faker = \Faker\Factory::create();
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             \App\Models\Project::create([
                 'name' => "MCIT Project Title".($i+1),//$faker->sentence,
                 'description' => $faker->randomElement($project_Descriptions),//$faker->paragraph,

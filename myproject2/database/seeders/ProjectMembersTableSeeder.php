@@ -16,7 +16,7 @@ class ProjectMembersTableSeeder extends Seeder
         $projectIDs = DB::table('projects')->pluck('id');
         $userIDs = DB::table('users')->pluck('id');
         $faker = \Faker\Factory::create();
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             \App\Models\ProjectMember::create([
                 'user_id' => $faker->randomElement($userIDs),
                 'project_id' => $faker->randomElement($projectIDs),

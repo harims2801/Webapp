@@ -42,9 +42,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::get('projectmembers/{project}/user/{user}', 'ProjectMemberController@show_user_projects');
     Route::get('memberofprojects/{project}', 'ProjectMemberController@show_project_members');
     Route::post('projectmembers', 'ProjectMemberController@store');
-    //Route::put('projectmembers/projects/{project}/user/{user}', 'ProjectMemberController@update_member');
+    Route::put('projectmembers/projects/{project}/user/{user}', 'ProjectMemberController@update_member');
     Route::put('projectmembers/{member}', 'ProjectMemberController@updatewithid');
-    Route::delete('projectmembers/{member_id}', 'ProjectMemberController@delete');
+    Route::delete('projectmembers/{member}', 'ProjectMemberController@delete');
 
     //Task Management
     Route::post('tasks', 'TaskController@store');

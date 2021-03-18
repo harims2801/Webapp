@@ -37,7 +37,7 @@ class TasksTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $project_id = 1;
         $task_id = 1;
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 6; $i++) {
 
             \App\Models\Task::create([
                 'title' => "MCIT Task ".$task_id." in project ".$project_id,

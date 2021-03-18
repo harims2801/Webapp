@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
             'user_role' => 'admin'
         ]);
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             \App\Models\User::create([
                 'name' => $faker->name,
                 'email' => $faker->email,
